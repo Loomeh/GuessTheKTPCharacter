@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import sql from '@/app/lib/db';
 
-export const runtime = 'edge';
+// Remove the edge runtime directive
+// export const runtime = 'edge';
 
 async function selectRandomCharacter() {
     try {
@@ -9,7 +10,7 @@ async function selectRandomCharacter() {
         const existingResult = await sql`
             SELECT character_id 
             FROM daily_character 
-            WHERE date = CURRENT_DATE::date
+            WHERE date = CURRENT_DATE
         `;
 
         if (existingResult.length > 0) {
@@ -21,7 +22,7 @@ async function selectRandomCharacter() {
             INSERT INTO daily_character (character_id, date)
             VALUES (
                 (SELECT id FROM characters ORDER BY random() LIMIT 1),
-                CURRENT_DATE::date
+                CURRENT_DATE
             )
             RETURNING character_id
         `;
