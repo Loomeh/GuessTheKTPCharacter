@@ -1,14 +1,11 @@
 import { NextResponse } from 'next/server';
 import sql from '@/app/lib/db';
 
-export const dynamic = 'force-dynamic';
+// Mark as edge function
 export const runtime = 'edge';
 
 async function selectRandomCharacter() {
-    console.log('Database URL exists:', !!process.env.POSTGRES_DATABASE_URL);
-    
     const today = new Date().toISOString().split('T')[0];
-    console.log('Current date:', today);
 
     try {
         const [character] = await sql`
@@ -30,32 +27,12 @@ async function selectRandomCharacter() {
 
 export async function GET() {
     try {
-        console.log('Environment:', process.env.NODE_ENV);
-        console.log('Starting cron job execution');
-        
         const characterId = await selectRandomCharacter();
-        return NextResponse.json({ 
-            success: true, 
-            characterId,
-            debug: {
-                envExists: !!process.env.POSTGRES_DATABASE_URL,
-                timestamp: new Date().toISOString()
-            }
-        });
+        return NextResponse.json({ success: true, characterId });
     } catch (error: unknown) {
-        console.error('Error in daily character cron:', error);
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        
         return NextResponse.json(
-            { 
-                success: false, 
-                error: 'Failed to select daily character',
-                debug: {
-                    envExists: !!process.env.POSTGRES_DATABASE_URL,
-                    errorMessage,
-                    timestamp: new Date().toISOString()
-                }
-            },
+            { success: false, error: errorMessage },
             { status: 500 }
         );
     }
