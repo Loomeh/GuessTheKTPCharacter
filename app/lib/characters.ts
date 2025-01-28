@@ -22,7 +22,8 @@ export async function getDailyCharacter(): Promise<Character> {
       WITH RandomCharacter AS (
           SELECT *,
           ROW_NUMBER() OVER (
-              ORDER BY MD5(CONCAT(${today}, id))::uuid
+              -- Explicit type cast for both parameters --
+              ORDER BY MD5(CONCAT(${today}::text, id::text))::uuid
           ) as rn
           FROM characters
       )
