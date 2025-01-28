@@ -4,58 +4,65 @@ import sql from '@/app/lib/db';
 export const runtime = 'edge';
 
 async function selectRandomCharacter() {
-    const today = new Date().toISOString().split('T')[0];
-
     try {
-        // First check if we already have a character for today
+        // Use PostgreSQL's CURRENT_DATE directly
+        const result = await sql`
+            INSERT INTO daily_character (character_id, date)
+            SELECT 
+                c.id,
+                CURRENT_DATE
+            FROM characters c
+            WHERE NOT EXISTS (
+                SELECT 1 
+                FROM daily_character dc 
+                WHERE dc.date = CURRENT_DATE
+            )
+            ORDER BY random()
+            LIMIT 1
+            RETURNING character_id;
+        `;
+
+        if (result.length > 0) {
+            return result[0].character_id;
+        }
+
+        // If no insertion happened, get today's character
         const existing = await sql`
             SELECT character_id 
             FROM daily_character 
-            WHERE date = ${today}
+            WHERE date = CURRENT_DATE
         `;
 
-        if (existing.length > 0) {
-            return existing[0].character_id;
-        }
+        return existing[0].character_id;
 
-        // If no character exists for today, select a random one
-        const [character] = await sql`
-            WITH RandomChar AS (
-                SELECT id as character_id
-                FROM characters
-                ORDER BY random()
-                LIMIT 1
-            )
-            INSERT INTO daily_character (character_id, date)
-            SELECT character_id, ${today}::date
-            FROM RandomChar
-            RETURNING character_id
-        `;
-
-        return character.character_id;
-    } catch (error) {
-        console.error('Database error:', error);
-        throw error;
+    } catch (e) {
+        // Properly type the error
+        const error = e as Error;
+        console.error('Database error:', {
+            message: error.message,
+            name: error.name,
+            timestamp: new Date().toISOString()
+        });
+        throw new Error('Failed to select or retrieve daily character');
     }
 }
 
 export async function GET() {
     try {
         const characterId = await selectRandomCharacter();
-        return NextResponse.json({ 
-            success: true, 
+        
+        return NextResponse.json({
+            success: true,
             characterId,
             timestamp: new Date().toISOString()
         });
-    } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-        return NextResponse.json(
-            { 
-                success: false, 
-                error: errorMessage,
-                timestamp: new Date().toISOString()
-            },
-            { status: 500 }
-        );
+    } catch (e) {
+        const error = e as Error;
+        
+        return NextResponse.json({
+            success: false,
+            error: error.message,
+            timestamp: new Date().toISOString()
+        }, { status: 500 });
     }
 }
