@@ -1,41 +1,23 @@
 import { NextResponse } from 'next/server';
-import pool from '@/app/lib/db';
+import sql from '@/app/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 async function selectRandomCharacter() {
-    const client = await pool.connect();
-    try {
-        // Get today's date in UTC
-        const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split('T')[0];
 
-        // Check if we already have a character for today
-        const existingResult = await client.query(
-            'SELECT character_id FROM daily_character WHERE date = $1',
-            [today]
-        );
+    const [character] = await sql`
+        WITH RandomCharacter AS (
+            SELECT *,
+            ROW_NUMBER() OVER (
+                ORDER BY MD5(CONCAT(${today}, id))::uuid
+            ) as rn
+            FROM characters
+        )
+        SELECT id FROM RandomCharacter WHERE rn = 1
+    `;
 
-        if (existingResult.rows.length > 0) {
-            return existingResult.rows[0].character_id;
-        }
-
-        // Select a random character
-        const result = await client.query(
-            'SELECT id FROM characters ORDER BY RANDOM() LIMIT 1'
-        );
-        
-        const characterId = result.rows[0].id;
-
-        // Store the selected character for today
-        await client.query(
-            'INSERT INTO daily_character (character_id, date) VALUES ($1, $2) ON CONFLICT (date) DO UPDATE SET character_id = $1',
-            [characterId, today]
-        );
-
-        return characterId;
-    } finally {
-        client.release();
-    }
+    return character.id;
 }
 
 export async function GET() {
