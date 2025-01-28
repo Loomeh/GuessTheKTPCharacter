@@ -1,4 +1,4 @@
-import sql from './db';
+import sql from '../lib/db';
 import type { Character } from '@/app/types/characters';
 
 export async function getAllCharacters(): Promise<Character[]> {
