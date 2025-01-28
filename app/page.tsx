@@ -50,7 +50,7 @@ export default function Home() {
                     {incorrectGuesses >= 2 && <p><strong>Species:</strong> {currentCharacter.species}</p>}
                     {incorrectGuesses >= 3 && <p><strong>Ethnicity:</strong> {currentCharacter.ethnicity}</p>}
                     {incorrectGuesses >= 4 && <p><strong>Debut Game:</strong> {currentCharacter.debutGame}</p>}
-                    {incorrectGuesses >= 5 && <p><strong>Quote:</strong> "{currentCharacter.quote}"</p>}
+                    {incorrectGuesses >= 5 && <p><strong>Quote:</strong> &ldquo;{currentCharacter.quote}&rdquo;</p>}
                 </div>
                 <input
                     type="text"
