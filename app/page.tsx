@@ -82,7 +82,7 @@ export default function Home() {
             )}
 
             {/* Show failure card when game is over and player didn't guess correctly */}
-            {gameOver && incorrectGuesses >= 5 && (
+            {gameOver && incorrectGuesses >= 6 && (
                 <FailureCard character={currentCharacter} />
             )}
         </div>
