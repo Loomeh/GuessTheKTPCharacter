@@ -1,0 +1,13 @@
+{
+    "characters": [
+        {
+            "id": "garcian-smith",
+            "name": "Garcian Smith",
+            "debutYear": 2005,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "Killer7",
+            "quote": "I am Garcian Smith (TEST)"
+        }
+    ]
+}
