@@ -5,38 +5,30 @@ export const runtime = 'edge';
 
 async function selectRandomCharacter() {
     try {
-        // Use PostgreSQL's CURRENT_DATE directly
-        const result = await sql`
-            INSERT INTO daily_character (character_id, date)
-            SELECT 
-                c.id,
-                CURRENT_DATE
-            FROM characters c
-            WHERE NOT EXISTS (
-                SELECT 1 
-                FROM daily_character dc 
-                WHERE dc.date = CURRENT_DATE
-            )
-            ORDER BY random()
-            LIMIT 1
-            RETURNING character_id;
-        `;
-
-        if (result.length > 0) {
-            return result[0].character_id;
-        }
-
-        // If no insertion happened, get today's character
-        const existing = await sql`
+        // Try to get existing character for today first
+        const existingResult = await sql`
             SELECT character_id 
             FROM daily_character 
-            WHERE date = CURRENT_DATE
+            WHERE date = CURRENT_DATE::date
         `;
 
-        return existing[0].character_id;
+        if (existingResult.length > 0) {
+            return existingResult[0].character_id;
+        }
+
+        // If no character exists, insert new one
+        const newResult = await sql`
+            INSERT INTO daily_character (character_id, date)
+            VALUES (
+                (SELECT id FROM characters ORDER BY random() LIMIT 1),
+                CURRENT_DATE::date
+            )
+            RETURNING character_id
+        `;
+
+        return newResult[0].character_id;
 
     } catch (e) {
-        // Properly type the error
         const error = e as Error;
         console.error('Database error:', {
             message: error.message,
