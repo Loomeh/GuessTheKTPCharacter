@@ -6,7 +6,6 @@ import sql from '@/app/lib/db';
 
 async function selectRandomCharacter() {
     try {
-        // Try to get existing character for today first
         const existingResult = await sql`
             SELECT character_id 
             FROM daily_character 
@@ -17,13 +16,13 @@ async function selectRandomCharacter() {
             return existingResult[0].character_id;
         }
 
-        // If no character exists, insert new one
+        // Insert using INSERT...SELECT syntax
         const newResult = await sql`
             INSERT INTO daily_character (character_id, date)
-            VALUES (
-                (SELECT id FROM characters ORDER BY random() LIMIT 1),
-                CURRENT_DATE
-            )
+            SELECT id, CURRENT_DATE
+            FROM characters
+            ORDER BY random()
+            LIMIT 1
             RETURNING character_id
         `;
 
