@@ -1,9 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///home/loomeh/GuessTheKTPCharacter/app/scfont_1609f9ef.module.css"],"sourcesContent":["@font-face {\n    font-family: 'scFont';\n    src: url('@vercel/turbopack-next/internal/font/local/font?{%22path%22:%22../public/font/FOT-ChiaroStd-B.otf%22,%22preload%22:true,%22has_size_adjust%22:true}') format('opentype');\n    font-display: swap;\n    \n}\n\n@font-face {\n    font-family: 'scFont Fallback';\n    src: local(\"Arial\");\n    ascent-override: 83.41%;\ndescent-override: 11.37%;\nline-gap-override: 94.78%;\nsize-adjust: 105.51%;\n\n}\n\n.className {\n    font-family: 'scFont', 'scFont Fallback';\n    \n}\n\n"],"names":[],"mappings":"AAAA;;;;;;AAOA;;;;;;;;;AAUA"}},
-    {"offset": {"line": 19, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
-    {"offset": {"line": 22, "column": 0}, "map": {"version":3,"sources":["file:///home/loomeh/GuessTheKTPCharacter/app/scfont_1609f9ef.module.css"],"sourcesContent":["@font-face {\n    font-family: 'scFont';\n    src: url('@vercel/turbopack-next/internal/font/local/font?{%22path%22:%22../public/font/FOT-ChiaroStd-B.otf%22,%22preload%22:true,%22has_size_adjust%22:true}') format('opentype');\n    font-display: swap;\n    \n}\n\n@font-face {\n    font-family: 'scFont Fallback';\n    src: local(\"Arial\");\n    ascent-override: 83.41%;\ndescent-override: 11.37%;\nline-gap-override: 94.78%;\nsize-adjust: 105.51%;\n\n}\n\n.className {\n    font-family: 'scFont', 'scFont Fallback';\n    \n}\n\n"],"names":[],"mappings":"AAAA;;;;;;AAOA;;;;;;;;;AAUA"}},
-    {"offset": {"line": 40, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
