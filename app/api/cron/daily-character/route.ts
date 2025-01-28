@@ -7,20 +7,34 @@ async function selectRandomCharacter() {
     const today = new Date().toISOString().split('T')[0];
 
     try {
-        // Modified query to properly cast the date string
-        const [character] = await sql`
-            WITH RandomCharacter AS (
-                SELECT *,
-                ROW_NUMBER() OVER (
-                    ORDER BY MD5(${today}::text || id::text)::uuid
-                ) as rn
-                FROM characters
-            )
-            SELECT id FROM RandomCharacter WHERE rn = 1
+        // First check if we already have a character for today
+        const existing = await sql`
+            SELECT character_id 
+            FROM daily_character 
+            WHERE date = ${today}
         `;
-        return character.id;
+
+        if (existing.length > 0) {
+            return existing[0].character_id;
+        }
+
+        // If no character exists for today, select a random one
+        const [character] = await sql`
+            WITH RandomChar AS (
+                SELECT id as character_id
+                FROM characters
+                ORDER BY random()
+                LIMIT 1
+            )
+            INSERT INTO daily_character (character_id, date)
+            SELECT character_id, ${today}::date
+            FROM RandomChar
+            RETURNING character_id
+        `;
+
+        return character.character_id;
     } catch (error) {
-        console.error('SQL Error:', error);
+        console.error('Database error:', error);
         throw error;
     }
 }
@@ -31,7 +45,7 @@ export async function GET() {
         return NextResponse.json({ 
             success: true, 
             characterId,
-            dateUsed: new Date().toISOString().split('T')[0]
+            timestamp: new Date().toISOString()
         });
     } catch (error: unknown) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -39,7 +53,7 @@ export async function GET() {
             { 
                 success: false, 
                 error: errorMessage,
-                dateAttempted: new Date().toISOString().split('T')[0]
+                timestamp: new Date().toISOString()
             },
             { status: 500 }
         );
