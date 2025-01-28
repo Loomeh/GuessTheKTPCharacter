@@ -3,11 +3,122 @@
         {
             "id": "garcian-smith",
             "name": "Garcian Smith",
+            "ethnicity": "African American",
             "debutYear": 2005,
             "gender": "Male",
             "species": "Human",
             "debutGame": "Killer7",
-            "quote": "I am Garcian Smith (TEST)"
+            "quote": "This gun holds seven bullets. I'm a professional."
+        },
+        {
+            "id": "jeane",
+            "name": "Jeane",
+            "ethnicity": "N/A",
+            "debutYear": 2007,
+            "gender": "Female",
+            "species": "Feline",
+            "debutGame": "No More Heroes",
+            "quote": "Are you tweaking? This is how I've always sounded."
+        },
+        {
+            "id": "harman-smith",
+            "name": "Harman Smith",
+            "ethnicity": "Caucasian",
+            "debutYear": 2005,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "Killer7",
+            "quote": "Let's dance..."
+        },
+        {
+            "id": "sumio-mondo",
+            "name": "Sumio Mondo",
+            "ethnicity": "Japanese",
+            "debutYear": 1999,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "Flower, Sun, and Rain",
+            "quote": "I'm getting that DS feeling..."
+        },
+        {
+            "id": "tokio-morishima",
+            "name": "Tokio Morishima",
+            "ethnicity": "Japanese",
+            "debutYear": 1999,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "The Silver Case",
+            "quote": "You don't look like burglars..."
+        },
+        {
+            "id": "yami",
+            "name": "Yami",
+            "ethnicity": "N/A",
+            "debutYear": 2011,
+            "gender": "N/A",
+            "species": "Entity",
+            "debutGame": "Shadows of the Damned",
+            "quote": "Darkness is stronger than light."
+        },
+        {
+            "id": "dan-smith",
+            "name": "Dan Smith",
+            "ethnicity": "Caucasian",
+            "debutYear": 2005,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "Killer7",
+            "quote": "This is too easy..."
+        },
+        {
+            "id": "con-smith",
+            "name": "Con Smith",
+            "ethnicity": "Chinese",
+            "debutYear": 2005,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "Killer7",
+            "quote": "Laaaaaterr!"
+        },
+        {
+            "id": "travis-touchdown",
+            "name": "Travis Touchdown",
+            "ethnicity": "Caucasian",
+            "debutYear": 2007,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "No More Heroes",
+            "quote": "Fu*khead!"
+        },
+        {
+            "id": "shinobu-jacobs",
+            "name": "Shinobu Jacobs",
+            "ethnicity": "African American",
+            "debutYear": 2007,
+            "gender": "Female",
+            "species": "Human",
+            "debutGame": "No More Heroes",
+            "quote": "What's that in your hand, a toy?" 
+        },
+        {
+            "id": "paula",
+            "name": "Paula",
+            "ethnicity": "Caucasian",
+            "debutYear": 2011,
+            "gender": "Female",
+            "species": "Human",
+            "debutGame": "Shadows of the Damned",
+            "quote": "Garcia, help me!"
+        },
+        {
+            "id": "kun-lan",
+            "name": "Kun Lan",
+            "ethnicity": "Tibetan",
+            "debutYear": 2005,
+            "gender": "Male",
+            "species": "Human",
+            "debutGame": "Killer7",
+            "quote": "There's always time for fun, it's friday night."
         }
     ]
 }
