@@ -29,7 +29,7 @@ export default function Home() {
             setIncorrectGuesses(newIncorrectGuesses);
             
             // Check if player has used all 5 guesses
-            if (newIncorrectGuesses >= 5) {
+            if (newIncorrectGuesses >= 6) {
                 setGameOver(true);
             }
         } else {
@@ -77,7 +77,7 @@ export default function Home() {
                 </div>
             </div>
 
-            {gameOver && incorrectGuesses < 5 && (
+            {gameOver && incorrectGuesses < 6 && (
                 <SuccessCard character={currentCharacter} />
             )}
 
