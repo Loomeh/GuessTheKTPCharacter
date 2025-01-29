@@ -1,21 +1,6 @@
 {
-  "crons": [
-    {
-      "path": "/api/cron/daily-character",
-      "schedule": "0 0 * * *"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "ktpguesser.loomeh.tech"
-        }
-      ],
-      "destination": "https://loomeh.tech/ktpguesser/:path*",
-      "permanent": true
-    }
-  ]
+    "crons": [{
+        "path": "/api/cron/daily-character",
+        "schedule": "0 0 * * *"
+    }]
 }
